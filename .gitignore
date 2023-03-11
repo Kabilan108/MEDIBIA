@@ -1,3 +1,4 @@
 data/
-.zip
-.h5
+*.zip
+*.h5
+
