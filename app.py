@@ -49,7 +49,7 @@ def classify_skin_condition():
     if 'image' not in request.files:
         return 'No image found in request', 400
     
-    image = request.files['image'].read()
+    image = request.files['image']
 
     prediction = classify_skin(image)
 
@@ -63,4 +63,4 @@ def index():
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
-    app.run(port=5000)
+    app.run(threaded=True, port=5000)
