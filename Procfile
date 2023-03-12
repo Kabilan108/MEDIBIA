@@ -1,1 +1,1 @@
-web: gunicorn src.medibia:app
+web: gunicorn app:app
