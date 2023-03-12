@@ -18,7 +18,7 @@ def classify_skin_condition():
 
     prediction = classify_skin(image)
 
-    return {'message': prediction}, 200
+    return prediction, 200
 
 
 @app.route('/disease-classifier', methods=['POST'])
