@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from predictions import classify_skin
 from classifyDiseases import getsymptomList, develop_inputList, getInfo
 import pickle
+import json
 
 with open('./models/disease-prediction/my_model_for_healthcare.pkl', 'rb') as f:
     disease_model = pickle.load(f)
@@ -21,7 +22,8 @@ def classify_skin_condition():
 
 @app.route('/disease_classifier', methods=['POST'])
 def classify_disease():
-    request_data = request.data
+    request_data = request.get_data()
+    request_data = json.loads(request_data.decode('utf-8'))
     userMessage = request_data['message'] 
     message = getsymptomList(userMessage)
     inputList = develop_inputList(message)
