@@ -14,12 +14,8 @@ dermanet = tf.keras.models.load_model('models/skin/dermanet-final.h5')
 
 # Define the class names
 class_names = [
-    'Acne', 'Actinic Keratosis (Malignant)', 'Atopic Dermatitis', 
-    'Bullous Disease', 'Cellulitis Impetigo', 'Eczema', 
-    'Exanthems (Drug Eruptions)', 'Alopecia', 'Herpes or HPV',
-    'Pigmentation Disorder', 'Lupus', 'Melanoma', 'Nail Fungus', 'Poison Ivy',
-    'Psoriasis', 'Lyme Disease', 'Benign Tumors', 'Systemic Disease',
-    'Ringworm', 'Hives', 'Vascular Tumors', 'Vasculitis', 'Warts Molluscum'
+    'Acne', 'Actinic Keratosis (Malignant Lesion)', 'Atopic Dermatitis', 
+    'Eczema', 'Nail Fungus', 'Psoriasis'
 ]
 
 
