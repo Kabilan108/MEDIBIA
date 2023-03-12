@@ -4,7 +4,7 @@ Function for performing image predictions
 
 # Imports
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
-from cv2 import imdecode, resize
+from cv2 import imdecode, resize, IMREAD_COLOR
 import tensorflow as tf
 import numpy as np
 
@@ -29,7 +29,7 @@ def classify_skin(image):
     # Load image
     images = []
     nparr = np.fromstring(image, np.uint8)
-    img = imdecode(nparr, cv2.IMREAD_COLOR)
+    img = imdecode(nparr, IMREAD_COLOR)
     img = resize(img, (100,100))
     images.append(img)
 
