@@ -9,8 +9,8 @@ import numpy as np
 import cv2
 
 # Load the trained models
-VGG19 = tf.keras.models.load_model('models/VGG19-final.h5')
-dermanet = tf.keras.models.load_model('models/dermanet-final.h5')
+VGG19 = tf.keras.models.load_model('models/skin/VGG19-final.h5')
+dermanet = tf.keras.models.load_model('models/skin/dermanet-final.h5')
 
 # Define the class names
 class_names = [
