@@ -23,12 +23,11 @@ class_names = [
 ]
 
 
-def classify_skin(image_path: str):
+def classify_skin(img):
     """Classify an image of a skin condition"""
 
     # Load image
     images = []
-    img = cv2.imread(image_path)
     img = cv2.resize(img, (100,100))
     images.append(img)
 

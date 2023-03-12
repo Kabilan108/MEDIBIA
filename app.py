@@ -1,5 +1,10 @@
+from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from predictions import classify_skin
+import tensorflow as tf
+import numpy as np
+import cv2
+import os
 
 app = Flask(__name__)
 
@@ -42,12 +47,25 @@ def post_something():
         return jsonify({
             "ERROR": "No name found. Please send a name."
         })
+    
+
+@app.route('/skin-condition', methods=['POST'])
+def classify_skin_condition():
+    if 'image' not in request.files:
+        return 'No image found in request', 400
+    
+    image = request.files['image'].read()
+    nparr = np.fromstring(image, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    prediction = classify_skin(img)
+
+    return prediction, 200
 
 
 @app.route('/')
 def index():
-    # A welcome message to test our server 
-    return "<h1>Welcome to our medium-greeting-api!</h1>"
+    return "<h1>Welcome to MEDIBIA!</h1>"
 
 
 if __name__ == '__main__':
