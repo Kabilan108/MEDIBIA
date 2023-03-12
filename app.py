@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from predictions import classify_skin
+
 app = Flask(__name__)
 
 
@@ -44,7 +46,7 @@ def post_something():
 
 @app.route('/')
 def index():
-    # A welcome message to test our server
+    # A welcome message to test our server 
     return "<h1>Welcome to our medium-greeting-api!</h1>"
 
 
