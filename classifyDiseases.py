@@ -106,3 +106,11 @@ def develop_inputList(diseaseList):
 
 
 
+def getInfo(disease):
+    model_engine = "text-davinci-003"
+    prompt = f"Here is a disease {disease}, provide valuable information"
+    completion = openai.Completion.create(
+                                        engine=model_engine,
+                                         prompt=prompt,
+                                         max_tokens=1024,)
+    return completion.choices[0].text

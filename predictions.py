@@ -43,4 +43,3 @@ def classify_skin(image):
     confidence = tf.nn.softmax(pred[0])[ class_idx ]
 
     return f'Theres a {confidence*100:.0f}% chance this is {pred_class}.'
-
