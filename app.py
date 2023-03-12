@@ -29,9 +29,7 @@ def classify_disease():
     inputList = develop_inputList(message)
     disease = disease_model.predict(inputList)
     info_on_disease = getInfo(disease)
-    return (f'I think you might have, {disease}, here is some info about it: \n {info_on_disease}')
-
-    return disease, 200
+    return (f'I think you might have, {disease}, here is some info about it: \n {info_on_disease}'), 200
 
 
 
