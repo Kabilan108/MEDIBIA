@@ -3,11 +3,16 @@ Function for performing image predictions
 """
 
 # Imports
+from tensorflow.keras.applications.imagenet_utils import preprocess_input
 import tensorflow as tf
+import numpy as np
+import cv2
 
+# Load the trained models
+VGG19 = tf.keras.models.load_model('models/VGG19-final.h5')
+dermanet = tf.keras.models.load_model('models/dermanet-final.h5')
 
-# Load the trained model
-model = tf.keras.models.load_model('models/dermanet-latest.h5')
+# Define the class names
 class_names = [
     'Acne', 'Actinic Keratosis (Malignant)', 'Atopic Dermatitis', 
     'Bullous Disease', 'Cellulitis Impetigo', 'Eczema', 
@@ -18,21 +23,28 @@ class_names = [
 ]
 
 
-def classify(image):
-    # Assuming that image is from Flask's request.files object
+def classify_skin(image_path: str):
+    """Classify an image of a skin condition"""
 
-    # Preprocess the image
-    image = tf.image.decode_image(image.read(), channels=3)
-    image = tf.image.resize(image, [224, 224])
-    image = tf.keras.applications.vgg16.preprocess_input(image)
+    # Load image
+    images = []
+    img = cv2.imread(image_path)
+    img = cv2.resize(img, (100,100))
+    images.append(img)
 
-    # Perform inference
-    prediction = model.predict(tf.expand_dims(image, axis=0))
+    # Feature extraction with VGG19 (Imagenet)
+    X = np.asarray(images)
+    X = preprocess_input(X)
+    features = VGG19.predict(X)
 
-    # Postprocess the prediction
-    predicted_class = class_names[tf.argmax(prediction[0], axis=-1)]
-    confidence = tf.nn.softmax(prediction[0])[tf.argmax(prediction[0], axis=-1)]
-    
+    # Reshape input for classifier
+    features = features.reshape(X.shape[0], 4608)
 
-    return f'{predicted_class} with {confidence*100:.2f}% confidence'
+    # Predict the class label
+    pred = dermanet.predict(features)
+    class_idx = tf.argmax(pred[0], axis=-1)
+    pred_class = class_names[ class_idx ]
+    confidence = tf.nn.softmax(pred[0])[ class_idx ]
+
+    return f'Theres a {confidence*100:.0f}% chance this is {pred_class}.'
 
