@@ -11,8 +11,6 @@ import pickle
 import os
 import openai as ai
 import pickle
-ai.organization = ""
-ai.api_key = "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"
 
 def getsymptomList(userText):
     labels = ["itching", "skin_rash", "nodal_skin_eruptions", "continuous_sneezing", "shivering", "chills", 
