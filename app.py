@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from predictions import classify_skin
+import pickle
+
 
 app = Flask(__name__)
-    
+
+disease_model = pickle.load(open('./notebooks/disease-prediction/my_model_for_healthcare', 'rb'))
 
 @app.route('/skin-condition', methods=['POST'])
 def classify_skin_condition():
@@ -14,6 +17,12 @@ def classify_skin_condition():
     prediction = classify_skin(image)
 
     return prediction, 200
+
+@app.route('/disease_classifier', methods=['POST'])
+def classify_disease():
+    request_data = request.data
+    request_data = json.loads(request_data.decode('utf-8'))
+    userMessage = request_data['message'] 
 
 
 @app.route('/')
