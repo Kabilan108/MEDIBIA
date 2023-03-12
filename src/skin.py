@@ -8,7 +8,15 @@ import tensorflow as tf
 
 # Load the trained model
 model = tf.keras.models.load_model('models/dermanet-latest.h5')
-class_names = []
+class_names = [
+    'Acne', 'Actinic Keratosis (Malignant)', 'Atopic Dermatitis', 
+    'Bullous Disease', 'Cellulitis Impetigo', 'Eczema', 
+    'Exanthems (Drug Eruptions)', 'Alopecia', 'Herpes or HPV',
+    'Pigmentation Disorder', 'Lupus', 'Melanoma', 'Nail Fungus', 'Poison Ivy',
+    'Psoriasis', 'Lyme Disease', 'Benign Tumors', 'Systemic Disease',
+    'Ringworm', 'Hives', 'Vascular Tumors', 'Vasculitis', 'Warts Molluscum'
+]
+
 
 def classify(image):
     # Assuming that image is from Flask's request.files object
@@ -22,9 +30,9 @@ def classify(image):
     prediction = model.predict(tf.expand_dims(image, axis=0))
 
     # Postprocess the prediction
-    I = tf.argmax(prediction[0])
-    predicted_class = class_names[I]
-    confidence = prediction[0][I]
+    predicted_class = class_names[tf.argmax(prediction[0], axis=-1)]
+    confidence = tf.nn.softmax(prediction[0])[tf.argmax(prediction[0], axis=-1)]
+    
 
     return f'{predicted_class} with {confidence*100:.2f}% confidence'
 
