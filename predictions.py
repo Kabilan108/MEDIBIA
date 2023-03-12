@@ -4,9 +4,9 @@ Function for performing image predictions
 
 # Imports
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
+from cv2 import imdecode, resize
 import tensorflow as tf
 import numpy as np
-import cv2
 
 # Load the trained models
 VGG19 = tf.keras.models.load_model('models/skin/VGG19-final.h5')
@@ -23,12 +23,14 @@ class_names = [
 ]
 
 
-def classify_skin(img):
+def classify_skin(image):
     """Classify an image of a skin condition"""
 
     # Load image
     images = []
-    img = cv2.resize(img, (100,100))
+    nparr = np.fromstring(image, np.uint8)
+    img = imdecode(nparr, cv2.IMREAD_COLOR)
+    img = resize(img, (100,100))
     images.append(img)
 
     # Feature extraction with VGG19 (Imagenet)

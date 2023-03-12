@@ -1,10 +1,5 @@
-from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from predictions import classify_skin
-import tensorflow as tf
-import numpy as np
-import cv2
-import os
 
 app = Flask(__name__)
 
@@ -55,10 +50,8 @@ def classify_skin_condition():
         return 'No image found in request', 400
     
     image = request.files['image'].read()
-    nparr = np.fromstring(image, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    prediction = classify_skin(img)
+    prediction = classify_skin(image)
 
     return prediction, 200
 
