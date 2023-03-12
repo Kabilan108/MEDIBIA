@@ -3,7 +3,8 @@ from predictions import classify_skin
 from classifyDiseases import getsymptomList, develop_inputList
 import pickle
 
-disease_model = pickle.load(open('./notebooks/disease-prediction/my_model_for_healthcare', 'rb'))
+with open('./models/disease-prediction/my_model_for_healthcare.pkl', 'rb') as f:
+    disease_model = pickle.load(f)
 
 app = Flask(__name__)
 
@@ -26,8 +27,8 @@ def classify_disease():
     message = getsymptomList(userMessage)
     inputList = develop_inputList(message)
     disease = disease_model.predict(inputList)
-    
 
+    return disease, 200
 
 
 @app.route('/')
@@ -38,3 +39,4 @@ def index():
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
     app.run(threaded=True, port=5000)
+
