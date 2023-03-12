@@ -18,7 +18,7 @@ def classify_skin_condition():
 
     prediction = classify_skin(image)
 
-    return prediction, 200
+    return {'message': prediction}, 200
 
 @app.route('/disease_classifier', methods=['POST'])
 def classify_disease():
@@ -29,7 +29,9 @@ def classify_disease():
     inputList = develop_inputList(message)
     disease = disease_model.predict([inputList])
     info_on_disease = getInfo(disease)
-    return (f'I think you might have, {disease[0]}, here is some info about it: \n {info_on_disease}'), 200
+    
+    res = f'I think you might have, {disease[0]}, here is some info about it:\n{info_on_disease}'
+    return {'message': res}, 200
 
 
 
