@@ -58,7 +58,7 @@ def getsymptomList(userText):
         {'role': 'system', 
         'content': f'You are a helpful medical assistant. When the user describes their symptoms, you identify which of the labels listed below best describes thier symptoms. Here is the list of allowed labels: {labels_str}'},
         {'role': 'system',
-         'content': 'Your response should be a comma-separated list of the labels that best describe the user\'s symptoms. The labels MUST ONLY be the ones listed above.'},
+         'content': 'Your response should be a comma-separated list of the labels that best describe the user\'s symptoms. The labels MUST ONLY be the ones listed above. Your reply should be no longer than 250 words.'},
         {'role': 'user',
         'content': "I've been itching all over like crazy for the past few days, and it's driving me insane."},
         {'role': 'assistant',
